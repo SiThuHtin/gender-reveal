@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f8f4f0;
+  --foreground: #2d3436;
+  --font-pacifico: 'Pacifico', cursive;
+  --font-parisienne: 'Parisienne', cursive;
+  --font-satisfy: 'Satisfy', cursive;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1a1a;
+    --foreground: #fcfcfc;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-montserrat), sans-serif;
+  overflow-x: hidden;
+}
+
+main {
+  background-color: var(--background);
+}
+
+.hero-text {
+  font-family: var(--font-satisfy) !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bg-photo {
+  background-image: url('../public/jumping.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-panel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Premium Gradient Backgrounds */
+.mesh-bg {
+  background-color: var(--background);
+  background-image: radial-gradient(at 0% 0%, hsla(43, 63%, 53%, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, hsla(13, 54%, 24%, 0.1) 0px, transparent 50%);
+}
+
+.heading-script {
+  font-family: var(--font-satisfy);
+}
+
+.heading-serif {
+  font-family: var(--font-playfair);
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
