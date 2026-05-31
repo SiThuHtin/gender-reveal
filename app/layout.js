@@ -4,7 +4,7 @@ import "./globals.css";
 
 // Soft rounded sans — used for big display headings (couple names, section titles)
 const quicksand = Quicksand({
-  variable: "--font-satisfy",
+  variable: "--font-quicksand",
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -12,7 +12,7 @@ const quicksand = Quicksand({
 
 // Soft elegant serif \u2014 used for italic quotes and numbers
 const cormorant = Cormorant_Garamond({
-  variable: "--font-playfair",
+  variable: "--font-cormorant",
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -20,7 +20,7 @@ const cormorant = Cormorant_Garamond({
 
 // Friendly modern sans \u2014 used for body text, buttons, eyebrow labels
 const poppins = Poppins({
-  variable: "--font-montserrat",
+  variable: "--font-poppins",
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",

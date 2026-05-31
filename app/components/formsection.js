@@ -1,31 +1,15 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function RSVPSection({ onSubmit, sending = false }) {
+export default function RSVPSection() {
   const [name, setName] = useState('');
   const [response, setResponse] = useState(null);
   const [numberOfGuests, setNumberOfGuests] = useState('');
   const [wish, setWish] = useState('');
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    const handleFocus = (e) => {
-      setTimeout(() => {
-        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 100);
-    };
-    const inputs = document.querySelectorAll('input, textarea');
-    inputs.forEach((input) => {
-      input.addEventListener('focus', handleFocus);
-    });
-    return () => {
-      inputs.forEach((input) => {
-        input.removeEventListener('focus', handleFocus);
-      });
-    };
-  }, []);
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,23 +20,29 @@ export default function RSVPSection({ onSubmit, sending = false }) {
       return;
     }
 
+    setSending(true);
     try {
-      await onSubmit({
-        name: name.trim(),
-        response,
-        numberOfGuests,
-        wish: wish.trim(),
+      const res = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          response,
+          numberOfGuests,
+          wish: wish.trim(),
+        }),
       });
-      setSuccess({
-        name: name.trim(),
-        response,
-      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || 'Failed to send.');
+      setSuccess({ name: name.trim(), response });
       setName('');
       setResponse(null);
       setNumberOfGuests('');
       setWish('');
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setSending(false);
     }
   };
 

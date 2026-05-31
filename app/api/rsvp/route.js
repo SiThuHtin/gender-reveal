@@ -1,6 +1,11 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { eventConfig } from "../../components/eventConfig";
+import { rsvpLimiter, getIp } from "../../lib/ratelimit";
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -80,11 +85,20 @@ function buildEmailHtml({ name, response, numberOfGuests, wish }) {
 }
 
 export async function POST(request) {
-  const apiKey = process.env.RESEND_API_KEY;
+  if (rsvpLimiter) {
+    const { success } = await rsvpLimiter.limit(getIp(request));
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+  }
+
   const fromEmail = process.env.RESEND_FROM_EMAIL;
   const toEmail = process.env.RSVP_TO_EMAIL;
 
-  if (!apiKey || !fromEmail || !toEmail) {
+  if (!resend || !fromEmail || !toEmail) {
     console.error("Missing Resend environment variables");
     return NextResponse.json(
       { error: "Email service is not configured." },
@@ -117,8 +131,6 @@ export async function POST(request) {
   const subject = attending
     ? `✅ RSVP Yes — ${name.trim()} (${numberOfGuests} guest${Number(numberOfGuests) === 1 ? "" : "s"})`
     : `❌ RSVP No — ${name.trim()}`;
-
-  const resend = new Resend(apiKey);
 
   const { error } = await resend.emails.send({
     from: fromEmail,
