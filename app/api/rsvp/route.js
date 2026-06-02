@@ -124,6 +124,9 @@ export async function POST(request) {
   if (response === "Yes" && !numberOfGuests) {
     return NextResponse.json({ error: "Number of guests is required." }, { status: 400 });
   }
+  if (response === "Yes" && (Number(numberOfGuests) < 1 || Number(numberOfGuests) > 10)) {
+    return NextResponse.json({ error: "Number of guests must be between 1 and 10." }, { status: 400 });
+  }
 
   const trimmedWish = wish?.trim() || "";
 

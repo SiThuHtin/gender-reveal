@@ -13,9 +13,6 @@ const TEAM = {
     label: "Team Girl",
     subtitle: "It's a Princess",
     confettiColors: ["#e89eb1", "#f7c8d3", "#ffffff"],
-    iconEmoji: "\u{1F467}",
-    iconAriaLabel: "Baby girl",
-    iconBg: "bg-gradient-to-br from-babyPink to-babyPinkDeep",
     barColor: "bg-babyPinkDeep",
   },
   boy: {
@@ -25,12 +22,54 @@ const TEAM = {
     label: "Team Boy",
     subtitle: "It's a Little Prince",
     confettiColors: ["#7fb6d8", "#bcdcef", "#ffffff"],
-    iconEmoji: "\u{1F466}",
-    iconAriaLabel: "Baby boy",
-    iconBg: "bg-gradient-to-br from-babyBlue to-babyBlueDeep",
     barColor: "bg-babyBlueDeep",
   },
 };
+
+const BabyGirlIcon = () => (
+  <svg viewBox="0 0 80 88" fill="none" className="w-20 h-20 md:w-24 md:h-24" aria-label="Baby girl">
+    {/* Bow left */}
+    <path d="M14 21 Q27 13 40 21 Q27 29 14 21Z" fill="#e89eb1"/>
+    {/* Bow right */}
+    <path d="M66 21 Q53 13 40 21 Q53 29 66 21Z" fill="#e89eb1"/>
+    {/* Bow knot */}
+    <circle cx="40" cy="21" r="5" fill="#c7698a"/>
+    {/* Face */}
+    <circle cx="40" cy="57" r="28" fill="#FFE8D6"/>
+    {/* Blush */}
+    <ellipse cx="24" cy="63" rx="7" ry="5" fill="#FFB6C1" opacity="0.6"/>
+    <ellipse cx="56" cy="63" rx="7" ry="5" fill="#FFB6C1" opacity="0.6"/>
+    {/* Eyes */}
+    <circle cx="32" cy="52" r="3.5" fill="#4A3728"/>
+    <circle cx="48" cy="52" r="3.5" fill="#4A3728"/>
+    <circle cx="33.5" cy="50.5" r="1.3" fill="white"/>
+    <circle cx="49.5" cy="50.5" r="1.3" fill="white"/>
+    {/* Smile */}
+    <path d="M33 64 Q40 72 47 64" stroke="#C77B6B" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+  </svg>
+);
+
+const BabyBoyIcon = () => (
+  <svg viewBox="0 0 80 90" fill="none" className="w-20 h-20 md:w-24 md:h-24" aria-label="Baby boy">
+    {/* Hat body */}
+    <path d="M18 37 Q21 11 40 9 Q59 11 62 37Z" fill="#7fb6d8"/>
+    {/* Pom pom */}
+    <circle cx="40" cy="9" r="6.5" fill="#bcdcef"/>
+    {/* Face */}
+    <circle cx="40" cy="64" r="26" fill="#FFE8D6"/>
+    {/* Hat brim — drawn after face so it sits on top */}
+    <rect x="11" y="34" width="58" height="10" rx="5" fill="#5a9fc4"/>
+    {/* Blush */}
+    <ellipse cx="25" cy="70" rx="7" ry="5" fill="#ADD8E6" opacity="0.6"/>
+    <ellipse cx="55" cy="70" rx="7" ry="5" fill="#ADD8E6" opacity="0.6"/>
+    {/* Eyes ^ ^ */}
+    <path d="M29 59 Q33 54 37 59" stroke="#4A3728" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    <path d="M43 59 Q47 54 51 59" stroke="#4A3728" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    {/* Smile */}
+    <path d="M33 72 Q40 80 47 72" stroke="#C77B6B" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+  </svg>
+);
+
 
 const VoteCard = ({ team, myVote, onVote, pct, count, loading }) => {
   const s = TEAM[team];
@@ -50,10 +89,8 @@ const VoteCard = ({ team, myVote, onVote, pct, count, loading }) => {
     >
       {/* Icon */}
       <div className="flex justify-center mb-5">
-        <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white/50 ${s.iconBg}`}>
-          <span className="text-5xl md:text-6xl leading-none select-none" role="img" aria-label={s.iconAriaLabel}>
-            {s.iconEmoji}
-          </span>
+        <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white/50 shadow-lg ring-4 ring-white/60 flex items-center justify-center">
+          {team === "girl" ? <BabyGirlIcon /> : <BabyBoyIcon />}
         </div>
       </div>
 
@@ -166,9 +203,16 @@ const VoteSection = () => {
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-satisfy text-charcoal mb-3 md:mb-4">
           Team Girl or Team Boy?
         </h2>
-        <p className="font-playfair italic text-charcoal/70 mb-10 md:mb-14 text-base md:text-lg">
+        <p className="font-playfair italic text-charcoal/70 mb-6 text-base md:text-lg">
           Tap your guess and see what everyone thinks!
         </p>
+
+        <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-white/80 rounded-full px-5 py-2.5 mb-10 md:mb-14 shadow-sm">
+          <span className="text-lg">🎁</span>
+          <span className="font-montserrat text-xs md:text-sm tracking-wide text-charcoal/80">
+            Correct guessers enter the <strong>Lucky Draw</strong> at 9:00 PM!
+          </span>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-3xl mx-auto">
           <VoteCard team="girl" myVote={mounted ? myVote : null} onVote={castVote} pct={girlPct} count={votes.girl} loading={loading} />

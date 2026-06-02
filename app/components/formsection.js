@@ -185,10 +185,11 @@ export default function RSVPSection() {
                   >
                     <input
                       type="number"
-                      placeholder="Number of Guests"
+                      placeholder="Number of Guests (max 10)"
                       value={numberOfGuests}
                       onChange={(e) => setNumberOfGuests(e.target.value)}
                       min="1"
+                      max="10"
                       className="w-full px-5 py-4 bg-white/20 backdrop-blur-md text-white placeholder-white/70 font-montserrat text-base rounded-2xl border border-white/40 focus:outline-none focus:ring-2 focus:ring-babyPink transition-all shadow-inner"
                       required
                     />
