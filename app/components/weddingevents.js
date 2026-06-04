@@ -1,39 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { eventConfig } from "./eventConfig";
+import { useT } from "../context/LanguageContext";
 
-const events = [
-  {
-    time: "6:00 PM – 7:00 PM",
-    emoji: "✨",
-    title: "Reception, Photo Time & Memory Messages",
-    description: "Take photos together and leave your sweet wishes for the baby 💌",
-  },
-  {
-    time: "7:00 PM – 7:30 PM",
-    emoji: "🎂",
-    title: "Gender Reveal Moment",
-    description: "Time for the big surprise! Let's cut the cake together and discover whether Baby is a boy or a girl 💙💖",
-  },
-  {
-    time: "7:30 PM – 9:00 PM",
-    emoji: "🍽",
-    title: "Dinner & Karaoke",
-    description: "Enjoy delicious food, music, laughter, and fun together 🎤",
-  },
-  {
-    time: "9:00 PM – 9:30 PM",
-    emoji: "🎁",
-    title: "Lucky Draw for the Correct Guess",
-    description: "One guest who guessed the baby's gender correctly will win a special gift!",
-  },
-  {
-    time: "9:30 PM – 10:00 PM",
-    emoji: "🥂",
-    title: "After Party & Free Time",
-    description: "More songs, more laughter, and more happy moments together ✨",
-  },
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -46,6 +15,8 @@ const itemVariants = {
 };
 
 const Weddingevents = () => {
+  const t = useT("events");
+  const events = t.list;
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-cream relative overflow-hidden py-16 md:py-24">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-babyPink/30 rounded-full blur-3xl" />
@@ -62,10 +33,10 @@ const Weddingevents = () => {
           className="md:w-2/5 flex flex-col justify-center"
         >
           <p className="text-xs md:text-sm tracking-[0.3em] font-montserrat uppercase text-charcoal/60 mb-3">
-            What&apos;s Happening
+            {t.eyebrow}
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-playfair font-bold text-charcoal leading-tight">
-            Event Schedule
+            {t.heading}
           </h2>
           <p className="text-xl sm:text-2xl font-satisfy text-babyPinkDeep mt-4 drop-shadow-sm">
             {eventConfig.reveal.displayDate}

@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useT } from '../context/LanguageContext';
 
 export default function RSVPSection() {
+  const t = useT("rsvp");
   const [name, setName] = useState('');
   const [response, setResponse] = useState(null);
   const [numberOfGuests, setNumberOfGuests] = useState('');
@@ -16,7 +18,7 @@ export default function RSVPSection() {
     setError('');
 
     if (!response || !name.trim()) {
-      setError('Please enter your name and choose Joyfully Accept or Regretfully Decline.');
+      setError(t.validationError);
       return;
     }
 
@@ -89,18 +91,16 @@ export default function RSVPSection() {
               </motion.div>
 
               <p className="text-xs md:text-sm tracking-[0.25em] font-montserrat uppercase text-white/70 mb-3">
-                Received
+                {t.received}
               </p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-satisfy text-white mb-3">
-                Thank you, {success.name}!
+                {t.thankYou(success.name)}
               </h2>
               <p className="font-playfair italic text-white/90 text-base md:text-lg leading-relaxed mb-2">
-                {success.response === 'Yes'
-                  ? "We can't wait to celebrate with you at the reveal!"
-                  : "Thank you for letting us know. We'll miss you!"}
+                {success.response === 'Yes' ? t.attendingMsg : t.decliningMsg}
               </p>
               <p className="font-montserrat text-white/70 text-sm mb-8">
-                Your response has been sent to Phyo &amp; Mon.
+                {t.sentTo}
               </p>
 
               <button
@@ -108,7 +108,7 @@ export default function RSVPSection() {
                 onClick={resetForm}
                 className="text-xs font-montserrat tracking-widest uppercase text-white/60 hover:text-white underline-offset-4 hover:underline transition-colors"
               >
-                Submit another response
+                {t.submitAnother}
               </button>
             </motion.div>
           ) : (
@@ -120,10 +120,10 @@ export default function RSVPSection() {
               transition={{ duration: 0.3 }}
             >
               <h1 className="text-2xl sm:text-3xl md:text-5xl font-satisfy mb-2 text-white text-center drop-shadow-md">
-                Join us for the reveal?
+                {t.heading}
               </h1>
               <p className="text-center text-white/80 font-playfair italic text-sm md:text-base mb-8">
-                Pink or Blue &mdash; come find out with us!
+                {t.subtitle}
               </p>
 
               <form onSubmit={handleSubmit} className="w-full space-y-5">
@@ -139,7 +139,7 @@ export default function RSVPSection() {
 
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={t.namePlaceholder}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-5 py-4 bg-white/20 backdrop-blur-md text-white placeholder-white/70 font-montserrat text-base rounded-2xl border border-white/40 focus:outline-none focus:ring-2 focus:ring-babyPink transition-all shadow-inner"
@@ -159,7 +159,7 @@ export default function RSVPSection() {
                       onChange={() => setResponse('Yes')}
                       className="hidden"
                     />
-                    <span className="group-hover:text-babyPink transition-colors">Joyfully Accept</span>
+                    <span className="group-hover:text-babyPink transition-colors">{t.accept}</span>
                   </label>
                   <label className="flex items-center space-x-3 cursor-pointer group">
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${response === 'No' ? 'border-babyBlue bg-babyBlue/20' : 'border-white/70'}`}>
@@ -173,7 +173,7 @@ export default function RSVPSection() {
                       onChange={() => setResponse('No')}
                       className="hidden"
                     />
-                    <span className="group-hover:text-babyBlue transition-colors">Regretfully Decline</span>
+                    <span className="group-hover:text-babyBlue transition-colors">{t.decline}</span>
                   </label>
                 </div>
 
@@ -185,7 +185,7 @@ export default function RSVPSection() {
                   >
                     <input
                       type="number"
-                      placeholder="Number of Guests (max 10)"
+                      placeholder={t.guestCount}
                       value={numberOfGuests}
                       onChange={(e) => setNumberOfGuests(e.target.value)}
                       min="1"
@@ -205,16 +205,16 @@ export default function RSVPSection() {
                     <span className="h-px flex-1 bg-gradient-to-r from-transparent via-babyBlue to-transparent" />
                   </div>
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-satisfy text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-babyPink via-white to-babyBlue drop-shadow-sm">
-                    A Wish for Baby
+                    {t.wishTitle}
                   </h2>
                   <p className="text-center text-white/70 font-montserrat text-xs tracking-[0.2em] uppercase mb-4">
-                    Optional &middot; Leave a sweet note
+                    {t.wishEyebrow}
                   </p>
                   <textarea
                     value={wish}
                     onChange={(e) => setWish(e.target.value)}
                     rows="4"
-                    placeholder="Dear baby, we can't wait to meet you..."
+                    placeholder={t.wishPlaceholder}
                     className="w-full p-4 bg-white/25 backdrop-blur-md text-white placeholder-white/60 font-playfair italic text-base rounded-2xl border border-white/50 focus:outline-none focus:ring-2 focus:ring-babyPink resize-none leading-relaxed shadow-inner"
                   />
                 </div>
@@ -227,7 +227,7 @@ export default function RSVPSection() {
                     whileHover={sending ? {} : { scale: 1.02 }}
                     whileTap={sending ? {} : { scale: 0.98 }}
                   >
-                    {sending ? 'SENDING...' : 'SEND WITH LOVE'}
+                    {sending ? t.sending : t.send}
                   </motion.button>
                 )}
               </form>

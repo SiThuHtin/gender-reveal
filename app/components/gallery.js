@@ -1,39 +1,20 @@
 "use client";
 import { motion } from "framer-motion";
+import { useT } from "../context/LanguageContext";
 
-const milestones = [
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-      </svg>
-    ),
-    label: "We Married",
-    detail: "Two became one",
-    accent: "babyPinkDeep",
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-        <circle cx="12" cy="12" r="9" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-      </svg>
-    ),
-    label: "We're Expecting",
-    detail: "A little one on the way",
-    accent: "babyBlueDeep",
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 2l2.39 4.84L20 8l-4 3.9.94 5.5L12 14.77 7.06 17.4 8 11.9 4 8l5.61-1.16L12 2z" />
-      </svg>
-    ),
-    label: "The Big Reveal",
-    detail: "Boy or Girl? You decide!",
-    accent: "babyPinkDeep",
-  },
+const ICONS = [
+  <svg key="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+  </svg>,
+  <svg key="clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+    <circle cx="12" cy="12" r="9" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+  </svg>,
+  <svg key="star" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2l2.39 4.84L20 8l-4 3.9.94 5.5L12 14.77 7.06 17.4 8 11.9 4 8l5.61-1.16L12 2z" />
+  </svg>,
 ];
+const ACCENTS = ["babyPinkDeep", "babyBlueDeep", "babyPinkDeep"];
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -46,6 +27,8 @@ const item = {
 };
 
 const GallerySection = () => {
+  const t = useT("gallery");
+  const milestones = t.milestones.map((m, i) => ({ ...m, icon: ICONS[i], accent: ACCENTS[i] }));
   return (
     <section className="relative bg-cream min-h-[80vh] py-16 md:py-24 overflow-hidden">
       {/* Decorative background */}
@@ -61,12 +44,12 @@ const GallerySection = () => {
           className="text-center mb-12 md:mb-20"
         >
           <p className="text-xs md:text-sm tracking-[0.3em] font-montserrat uppercase text-charcoal/60 mb-3">
-            Our Journey
+            {t.eyebrow}
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-satisfy text-charcoal leading-tight">
-            Two hearts became one,
+            {t.heading1}
             <br className="hidden sm:block" />
-            and now we&apos;re becoming three.
+            {t.heading2}
           </h2>
         </motion.div>
 
@@ -101,7 +84,7 @@ const GallerySection = () => {
                 {m.detail}
               </div>
               <div className="relative z-10 mt-5 font-montserrat tracking-[0.3em] uppercase text-[10px] text-charcoal/40">
-                Step {idx + 1}
+                {t.step} {idx + 1}
               </div>
             </motion.div>
           ))}

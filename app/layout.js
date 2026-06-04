@@ -1,5 +1,5 @@
 import { Quicksand, Cormorant_Garamond, Poppins } from "next/font/google";
-
+import Providers from "./providers";
 import "./globals.css";
 
 // Soft rounded sans — used for big display headings (couple names, section titles)
@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
         className={`${quicksand.variable} ${cormorant.variable} ${poppins.variable} antialiased mesh-bg smooth-scroll`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

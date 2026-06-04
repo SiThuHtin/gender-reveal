@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Countdown from "./countdown";
 import { eventConfig } from "./eventConfig";
+import { useT } from "../context/LanguageContext";
 
 const HeroSection = () => {
+    const t = useT("hero");
     return (
         <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-16">
             {/* Gradient background \u2014 no photo */}
@@ -80,7 +82,7 @@ const HeroSection = () => {
                     transition={{ delay: 0.5, duration: 0.8 }}
                     className="text-[10px] md:text-sm text-charcoal/70 font-montserrat tracking-[0.25em] md:tracking-[0.35em] uppercase mb-4 md:mb-6"
                 >
-                    Baby On The Way &middot; Gender Reveal
+                    {t.eyebrow}
                 </motion.div>
 
                 {/* Couple names */}
@@ -100,9 +102,9 @@ const HeroSection = () => {
                     transition={{ delay: 0.85, duration: 0.8 }}
                     className="text-3xl sm:text-4xl md:text-5xl font-playfair text-charcoal mb-6 md:mb-8"
                 >
-                    <span className="text-babyPinkDeep">Boy</span>
-                    <span className="text-charcoal/60 italic mx-3">or</span>
-                    <span className="text-babyBlueDeep">Girl?</span>
+                    <span className="text-babyPinkDeep">{t.boy}</span>
+                    <span className="text-charcoal/60 italic mx-3">{t.or}</span>
+                    <span className="text-babyBlueDeep">{t.girl}?</span>
                 </motion.div>
 
                 {/* Date badge */}
@@ -124,7 +126,7 @@ const HeroSection = () => {
                     transition={{ delay: 1.1, duration: 1 }}
                     className="text-base sm:text-lg md:text-xl font-playfair text-charcoal/80 italic leading-relaxed"
                 >
-                    &ldquo;{eventConfig.quote.text}&rdquo;
+                    &ldquo;{t.quote}&rdquo;
                 </motion.p>
 
                 {/* Countdown */}
@@ -141,7 +143,7 @@ const HeroSection = () => {
                 className="absolute bottom-8 z-10 flex flex-col items-center gap-2"
             >
                 <span className="text-charcoal/60 font-montserrat tracking-[0.2em] text-[10px] uppercase">
-                    Scroll
+                    {t.scroll}
                 </span>
                 <motion.div
                     animate={{ y: [0, 10, 0] }}

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { eventConfig } from "./eventConfig";
+import { useT } from "../context/LanguageContext";
 
 const getTimeLeft = (target) => {
   const diff = target.getTime() - Date.now();
@@ -32,6 +33,7 @@ const Cell = ({ value, label }) => (
 const Countdown = ({ variant = "hero" }) => {
   const target = eventConfig.reveal.date;
   const [time, setTime] = useState(null);
+  const t = useT("countdown");
 
   useEffect(() => {
     setTime(getTimeLeft(target));
@@ -55,14 +57,14 @@ const Countdown = ({ variant = "hero" }) => {
           </h2>
           {d.done ? (
             <div className="text-2xl md:text-4xl font-playfair text-charcoal">
-              It&apos;s time! The reveal is here.
+              {t.done}
             </div>
           ) : (
             <div className="flex justify-center gap-3 sm:gap-5 md:gap-6 [&_span]:!text-charcoal [&_div>div]:!bg-white/60 [&_div>div]:!border-white/80">
-              <Cell value={d.days} label="Days" />
-              <Cell value={d.hours} label="Hours" />
-              <Cell value={d.minutes} label="Minutes" />
-              <Cell value={d.seconds} label="Seconds" />
+              <Cell value={d.days} label={t.days} />
+              <Cell value={d.hours} label={t.hours} />
+              <Cell value={d.minutes} label={t.minutes} />
+              <Cell value={d.seconds} label={t.seconds} />
             </div>
           )}
         </div>
@@ -77,10 +79,10 @@ const Countdown = ({ variant = "hero" }) => {
       transition={{ delay: 1.4, duration: 0.8 }}
       className="mt-8 md:mt-10 flex justify-center gap-3 sm:gap-4 md:gap-5"
     >
-      <Cell value={d.days} label="Days" />
-      <Cell value={d.hours} label="Hours" />
-      <Cell value={d.minutes} label="Minutes" />
-      <Cell value={d.seconds} label="Seconds" />
+      <Cell value={d.days} label={t.days} />
+      <Cell value={d.hours} label={t.hours} />
+      <Cell value={d.minutes} label={t.minutes} />
+      <Cell value={d.seconds} label={t.seconds} />
     </motion.div>
   );
 };

@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import ColorPalette from "./colorpalette";
 import AddToCalendar from "./addtocalendar";
 import { eventConfig } from "./eventConfig";
+import { useT } from "../context/LanguageContext";
 
 const Weddinginfo = () => {
+    const t = useT("weddinginfo");
     return (
         <section className="relative flex flex-col items-center justify-center min-h-screen bg-charcoal px-6 py-16 md:py-24 overflow-hidden">
             {/* Decorative blobs */}
@@ -20,13 +22,13 @@ const Weddinginfo = () => {
                 className="relative z-10 max-w-2xl w-full text-center"
             >
                 <p className="text-xs md:text-sm tracking-[0.3em] font-montserrat uppercase text-babyPink/80 mb-4">
-                    Save The Date
+                    {t.eyebrow}
                 </p>
 
                 <h2 className="text-4xl sm:text-5xl md:text-6xl text-cream font-satisfy mb-8 md:mb-10 leading-tight drop-shadow-md">
                     {eventConfig.couple.joined}
                     <br />
-                    are revealing baby
+                    {t.heading}
                 </h2>
 
                 {/* Pink + blue framed details */}
@@ -39,10 +41,10 @@ const Weddinginfo = () => {
 
                     <div className="space-y-2 font-montserrat tracking-wide">
                         <div className="text-babyPink text-xl md:text-2xl font-light">
-                            {eventConfig.reveal.displayDate}
+                            {t.displayDate}
                         </div>
                         <div className="text-cream text-base md:text-lg font-light opacity-90">
-                            {eventConfig.reveal.displayTime}
+                            {t.displayTime}
                         </div>
                         <div className="h-px w-16 bg-cream/30 mx-auto my-3" />
                         <div className="text-cream text-lg md:text-xl font-light opacity-90">
@@ -55,14 +57,14 @@ const Weddinginfo = () => {
                             {eventConfig.venue.address}
                         </div>
                         <div className="text-babyBlue/90 text-xs md:text-sm font-playfair italic pt-1">
-                            {eventConfig.venue.transit}
+                            {t.transit}
                         </div>
                     </div>
                 </div>
 
                 {/* Action buttons \u2014 calendar + directions */}
                 <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
-                    <AddToCalendar />
+                    <AddToCalendar label={t.addToCalendar} />
                     <motion.a
                         href={eventConfig.venue.mapUrl}
                         target="_blank"
@@ -75,16 +77,16 @@ const Weddinginfo = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z" />
                             <circle cx="12" cy="10" r="3" />
                         </svg>
-                        Get Directions
+                        {t.getDirections}
                     </motion.a>
                 </div>
 
                 <div className="mb-10">
                     <p className="text-xs md:text-sm tracking-[0.3em] font-montserrat uppercase text-babyBlue/80 mb-3">
-                        Dress Code
+                        {t.dressCodeLabel}
                     </p>
                     <p className="text-cream text-base md:text-lg font-playfair italic opacity-90">
-                        {eventConfig.dressCode}
+                        {t.dressCode}
                     </p>
                 </div>
 
