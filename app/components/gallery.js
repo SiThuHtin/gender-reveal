@@ -1,34 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useT } from "../context/LanguageContext";
-
-const ICONS = [
-  <svg key="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-  </svg>,
-  <svg key="clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-    <circle cx="12" cy="12" r="9" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-  </svg>,
-  <svg key="star" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2l2.39 4.84L20 8l-4 3.9.94 5.5L12 14.77 7.06 17.4 8 11.9 4 8l5.61-1.16L12 2z" />
-  </svg>,
-];
-const ACCENTS = ["babyPinkDeep", "babyBlueDeep", "babyPinkDeep"];
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
 
 const GallerySection = () => {
   const t = useT("gallery");
-  const milestones = t.milestones.map((m, i) => ({ ...m, icon: ICONS[i], accent: ACCENTS[i] }));
   return (
     <section className="relative bg-cream min-h-[80vh] py-16 md:py-24 overflow-hidden">
       {/* Decorative background */}
@@ -41,7 +17,7 @@ const GallerySection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-12 md:mb-20"
+          className="text-center mb-12 md:mb-16"
         >
           <p className="text-xs md:text-sm tracking-[0.3em] font-montserrat uppercase text-charcoal/60 mb-3">
             {t.eyebrow}
@@ -53,41 +29,32 @@ const GallerySection = () => {
           </h2>
         </motion.div>
 
+        {/* Featured couple photo */}
         <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative mx-auto max-w-3xl"
         >
-          {milestones.map((m, idx) => (
-            <motion.div
-              key={idx}
-              variants={item}
-              className="relative bg-white/60 backdrop-blur-md border border-white/80 rounded-3xl p-8 md:p-10 text-center shadow-xl overflow-hidden group hover:-translate-y-1 transition-transform"
-            >
-              {/* Soft glow */}
-              <div
-                className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-60"
-                style={{ backgroundColor: m.accent === "babyPinkDeep" ? "#f7c8d3" : "#bcdcef" }}
-              />
-              <div
-                className="relative z-10 mx-auto mb-5 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg"
-                style={{ backgroundColor: m.accent === "babyPinkDeep" ? "#e89eb1" : "#7fb6d8" }}
-              >
-                {m.icon}
-              </div>
-              <div className="relative z-10 font-satisfy text-2xl md:text-3xl text-charcoal mb-2">
-                {m.label}
-              </div>
-              <div className="relative z-10 font-playfair italic text-charcoal/70 text-sm md:text-base">
-                {m.detail}
-              </div>
-              <div className="relative z-10 mt-5 font-montserrat tracking-[0.3em] uppercase text-[10px] text-charcoal/40">
-                {t.step} {idx + 1}
-              </div>
-            </motion.div>
-          ))}
+          <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-[6px] border-white">
+            <Image
+              src="/photo2.jpg"
+              alt="Phyo & Mon holding their baby's first ultrasound"
+              width={1335}
+              height={907}
+              className="w-full h-auto object-cover"
+              priority
+            />
+            {/* Soft gradient overlay at the bottom */}
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
+            <p className="absolute bottom-4 left-0 right-0 text-center font-satisfy text-white text-2xl md:text-3xl drop-shadow-lg">
+              Our little miracle 💕
+            </p>
+          </div>
+          {/* Decorative corner accents */}
+          <div className="absolute -top-3 -left-3 w-16 h-16 bg-babyPink/50 rounded-full blur-xl" />
+          <div className="absolute -bottom-3 -right-3 w-16 h-16 bg-babyBlue/50 rounded-full blur-xl" />
         </motion.div>
       </div>
     </section>

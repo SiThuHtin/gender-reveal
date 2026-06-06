@@ -14,7 +14,6 @@ function makeLimiter(prefix, requests, window) {
   return new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(requests, window), prefix });
 }
 
-export const rsvpLimiter = makeLimiter("rl:rsvp", 5, "1 h");
 export const voteLimiter = makeLimiter("rl:vote", 3, "1 h");
 
 export function getIp(request) {

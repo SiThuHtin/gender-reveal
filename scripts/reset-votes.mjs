@@ -10,7 +10,7 @@ const redis = new Redis({
 
 // Show current voters before clearing
 const raw = await redis.hgetall("votes:entries");
-const entries = Object.values(raw || {}).map((v) => JSON.parse(v));
+const entries = Object.values(raw || {}).map((v) => (typeof v === "string" ? JSON.parse(v) : v));
 
 if (entries.length > 0) {
   console.log("\n📋 Voters before reset:");
@@ -23,5 +23,16 @@ if (entries.length > 0) {
   console.log("\n  (no votes to clear)\n");
 }
 
-await redis.del("votes:girl", "votes:boy", "votes:entries");
-console.log("✅ All vote data cleared.\n");
+// Show current RSVPs before clearing
+const rawRsvps = await redis.lrange("rsvp:list", 0, -1);
+const rsvps = (rawRsvps || []).map((v) => (typeof v === "string" ? JSON.parse(v) : v));
+if (rsvps.length > 0) {
+  console.log("💌 RSVPs before reset:");
+  rsvps.forEach((r) =>
+    console.log(`  ${r.name} — ${r.response === "Yes" ? `Attending (${r.guests})` : "Not attending"}`)
+  );
+  console.log("");
+}
+
+await redis.del("votes:girl", "votes:boy", "votes:entries", "rsvp:list");
+console.log("✅ All vote + RSVP test data cleared.\n");

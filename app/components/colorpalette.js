@@ -1,20 +1,16 @@
 const colors = [
-  { name: "Blush Pink", hex: "#F7C8D3" },
-  { name: "Rose Petal", hex: "#E89EB1" },
-  { name: "Cream", hex: "#F8F4F0" },
-  { name: "Mint", hex: "#D8ECDF" },
-  { name: "Powder Blue", hex: "#BCDCEF" },
-  { name: "Sky Blue", hex: "#7FB6D8" },
+  { name: "Pink", hex: "#E89EB1" },
+  { name: "Blue", hex: "#7FB6D8" },
 ];
 
 const ColorPalette = () => {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-3 justify-center">
       {colors.map((color) => (
         <div
           key={color.hex}
           title={color.name}
-          className="w-10 h-10 rounded-full border border-white/30 shadow-md"
+          className="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 border-white/40 shadow-md"
           style={{ backgroundColor: color.hex }}
         />
       ))}

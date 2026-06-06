@@ -1,7 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { useT } from '../context/LanguageContext';
+import { eventConfig } from './eventConfig';
 
 export default function RSVPSection() {
   const t = useT("rsvp");
@@ -24,18 +26,42 @@ export default function RSVPSection() {
 
     setSending(true);
     try {
-      const res = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          response,
-          numberOfGuests,
-          wish: wish.trim(),
+      // Run both in parallel: save a backup to our database + send the email.
+      // The RSVP is never lost as long as one of them succeeds.
+      const [emailResult, saveResult] = await Promise.allSettled([
+        emailjs.send(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+          {
+            name: name.trim(),
+            response: response === 'Yes' ? 'Joyfully Accept ✅' : 'Regretfully Decline ❌',
+            attending: response,
+            guests: response === 'Yes' ? (numberOfGuests || '1') : '-',
+            wish: wish.trim() || 'No wish left',
+            event_date: eventConfig.reveal.displayDate,
+            event_time: eventConfig.reveal.displayTime,
+            venue: eventConfig.venue.name,
+          },
+          { publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }
+        ),
+        fetch('/api/rsvp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name.trim(), response, numberOfGuests, wish: wish.trim() }),
         }),
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || 'Failed to send.');
+      ]);
+
+      const emailed = emailResult.status === 'fulfilled';
+      const saved = saveResult.status === 'fulfilled' && saveResult.value.ok;
+
+      if (!emailed) console.error('EmailJS error:', emailResult.reason);
+      if (!saved) console.error('Backup save failed:', saveResult.reason || saveResult.value?.status);
+
+      // Only fail if BOTH failed — otherwise the RSVP is safely recorded.
+      if (!emailed && !saved) {
+        throw new Error('Failed to submit. Please check your connection and try again.');
+      }
+
       setSuccess({ name: name.trim(), response });
       setName('');
       setResponse(null);
@@ -54,7 +80,7 @@ export default function RSVPSection() {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-24">
+    <section id="rsvp" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-24 scroll-mt-0">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-babyBlueDeep via-charcoal to-babyPinkDeep" />
         <div className="absolute inset-0 bg-black/30" />

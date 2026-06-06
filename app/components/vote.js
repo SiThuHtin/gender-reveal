@@ -321,9 +321,23 @@ const VoteSection = () => {
               <p className="font-playfair italic text-charcoal/70 text-sm md:text-base mb-1">
                 {t.youGuessed} <strong>{myVote === "girl" ? `${t.girlLabel} 🎀` : `${t.boyLabel} 👑`}</strong>
               </p>
-              <p className="font-montserrat text-xs text-charcoal/50 mb-5">
+              <p className="font-montserrat text-xs text-charcoal/50 mb-4">
                 {t.luckyDrawEntered}
               </p>
+
+              {/* RSVP reminder + CTA */}
+              <p className="font-playfair italic text-charcoal/80 text-sm mb-3">
+                {t.dontForget}
+              </p>
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="w-full px-5 py-3 mb-3 rounded-2xl bg-gradient-to-r from-babyPinkDeep to-babyBlueDeep text-white font-montserrat tracking-widest uppercase text-sm font-semibold shadow-lg hover:opacity-90 transition-all"
+              >
+                {t.rsvpCta}
+              </button>
 
               {/* Change guess button */}
               <button

@@ -21,13 +21,22 @@ export async function GET(request) {
   }
 
   try {
-    const raw = await redis.hgetall("votes:entries");
-    const entries = Object.values(raw || {}).map((v) =>
+    const [rawVotes, rawRsvps] = await Promise.all([
+      redis.hgetall("votes:entries"),
+      redis.lrange("rsvp:list", 0, -1),
+    ]);
+
+    const entries = Object.values(rawVotes || {}).map((v) =>
       typeof v === "string" ? JSON.parse(v) : v
     );
+    const rsvps = (rawRsvps || []).map((v) =>
+      typeof v === "string" ? JSON.parse(v) : v
+    );
+
     return NextResponse.json({
       girl: entries.filter((e) => e.team === "girl").map((e) => e.name),
       boy: entries.filter((e) => e.team === "boy").map((e) => e.name),
+      rsvps,
     });
   } catch (err) {
     console.error("[admin/voters] Error:", err);

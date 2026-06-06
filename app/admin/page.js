@@ -220,6 +220,41 @@ export default function AdminPage() {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* RSVP list */}
+            <div className="bg-white/70 backdrop-blur-md border border-white/80 rounded-3xl p-6 md:p-8 shadow-xl">
+              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <h2 className="font-satisfy text-3xl text-charcoal">RSVPs 💌</h2>
+                <div className="flex gap-2 font-montserrat text-xs">
+                  <span className="bg-babyPink/40 text-[#7a2e44] rounded-full px-3 py-1">
+                    {(data.rsvps || []).filter((r) => r.response === "Yes").length} attending
+                  </span>
+                  <span className="bg-babyBlue/40 text-[#1f4e6b] rounded-full px-3 py-1">
+                    {(data.rsvps || []).reduce((s, r) => s + (r.response === "Yes" ? Number(r.guests) || 0 : 0), 0)} guests total
+                  </span>
+                </div>
+              </div>
+
+              {(!data.rsvps || data.rsvps.length === 0) ? (
+                <p className="font-playfair italic text-charcoal/40 text-sm">No RSVPs yet</p>
+              ) : (
+                <ul className="space-y-3">
+                  {data.rsvps.map((r, i) => (
+                    <li key={i} className="rounded-2xl border border-charcoal/10 bg-white/60 p-4">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-montserrat font-semibold text-charcoal">{r.name}</span>
+                        <span className={`font-montserrat text-xs px-2.5 py-1 rounded-full ${r.response === "Yes" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                          {r.response === "Yes" ? `Attending · ${r.guests} guest${Number(r.guests) === 1 ? "" : "s"}` : "Not attending"}
+                        </span>
+                      </div>
+                      {r.wish && (
+                        <p className="font-playfair italic text-charcoal/70 text-sm mt-2">“{r.wish}”</p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </motion.div>
         )}
       </div>

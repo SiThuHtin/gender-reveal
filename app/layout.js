@@ -31,6 +31,7 @@ const description =
   "You're invited! Join Phyo & Mon to discover whether their newest little love is a boy or a girl.";
 
 export const metadata = {
+  metadataBase: new URL("https://gender-reveal-of-phyo-and-mon.vercel.app"),
   title,
   description,
   openGraph: {

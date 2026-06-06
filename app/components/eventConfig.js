@@ -4,7 +4,7 @@
 // Absolute moments in Tokyo time (UTC+9). The +09:00 suffix makes these
 // unambiguous regardless of where the website is served from \u2014 the countdown
 // timer and Add-to-Calendar links will be correct in every viewer's timezone.
-const REVEAL_START = new Date("2026-06-27T18:30:00+09:00");
+const REVEAL_START = new Date("2026-06-27T18:00:00+09:00");
 const REVEAL_END = new Date("2026-06-27T22:00:00+09:00");
 
 export const eventConfig = {
@@ -19,7 +19,7 @@ export const eventConfig = {
     // Hardcoded display strings so they always read the same to every guest,
     // regardless of their browser locale or system timezone.
     displayDate: "Saturday, June 27, 2026",
-    displayTime: "6:30 PM \u2013 10:00 PM",
+    displayTime: "6:00 PM \u2013 10:00 PM",
   },
   venue: {
     name: "Metta Asia Restaurant",
@@ -34,7 +34,7 @@ export const eventConfig = {
     mapUrl:
       "https://www.google.com/maps/dir/?api=1&destination=35.5864598,139.729267",
   },
-  dressCode: "For Ladies (Pink Or Blue) If Possible 🫶",
+  dressCode: "Pink or blue, if possible 🫶",
   quote: {
     text: "A baby fills a place in your heart that you never knew was empty.",
     author: "Unknown",
