@@ -148,9 +148,15 @@ export default function RSVPSection() {
               <h1 className="text-2xl sm:text-3xl md:text-5xl font-satisfy mb-2 text-white text-center drop-shadow-md">
                 {t.heading}
               </h1>
-              <p className="text-center text-white/80 font-playfair italic text-sm md:text-base mb-8">
+              <p className="text-center text-white/80 font-playfair italic text-sm md:text-base mb-4">
                 {t.subtitle}
               </p>
+
+              <div className="flex justify-center mb-8">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/30 px-4 py-2 font-montserrat text-xs md:text-sm tracking-wide text-white">
+                  ⏰ {t.deadline}
+                </span>
+              </div>
 
               <form onSubmit={handleSubmit} className="w-full space-y-5">
                 {error && (

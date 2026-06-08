@@ -261,6 +261,9 @@ export default function MusicPlayer() {
                     <p className="font-montserrat text-xs tracking-[0.3em] uppercase text-charcoal/45">
                       Tap to Open
                     </p>
+                    <p className="mt-3 font-montserrat text-[11px] tracking-wide text-charcoal/55">
+                      ⏰ RSVP Deadline: June 20, 2026
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -116,6 +116,7 @@ const VoteCard = ({ team, myVote, onVote, pct, count, loading, disabled, label, 
 
 const VoteSection = () => {
   const t = useT("vote");
+  const tRsvp = useT("rsvp");
   const [votes, setVotes] = useState({ girl: 0, boy: 0 });
   const [myVote, setMyVote] = useState(null);
   const [voterName, setVoterName] = useState("");
@@ -199,12 +200,17 @@ const VoteSection = () => {
           {t.heading}
         </h2>
 
-        <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-white/80 rounded-full px-5 py-2.5 mb-8 shadow-sm">
+        <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-white/80 rounded-full px-5 py-2.5 mb-4 shadow-sm">
           <span className="text-lg">🎁</span>
           <span className="font-montserrat text-xs md:text-sm tracking-wide text-charcoal/80">
             {t.luckyDraw}
           </span>
         </div>
+
+        {/* Voting deadline */}
+        <p className="font-montserrat text-xs md:text-sm font-semibold text-babyPinkDeep mb-8">
+          ⏰ {t.votingDeadline}
+        </p>
 
         {/* Fix 1 — Step indicators */}
         <div className="flex items-center justify-center gap-3 mb-6">
@@ -326,8 +332,11 @@ const VoteSection = () => {
               </p>
 
               {/* RSVP reminder + CTA */}
-              <p className="font-playfair italic text-charcoal/80 text-sm mb-3">
+              <p className="font-playfair italic text-charcoal/80 text-sm mb-2">
                 {t.dontForget}
+              </p>
+              <p className="font-montserrat text-xs font-semibold text-babyPinkDeep mb-3">
+                ⏰ {tRsvp.deadline}
               </p>
               <button
                 type="button"

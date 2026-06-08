@@ -80,6 +80,7 @@ export const t = {
       heading: "Team Girl or Team Boy?",
       subtitle: "Tap your guess and see what everyone thinks!",
       luckyDraw: "Correct guessers enter the Lucky Draw at 9:00 PM!",
+      votingDeadline: "Voting Deadline: June 20, 2026",
       step1: "Your name",
       step2: "Pick your team",
       namePlaceholder: "✏️ Enter your name",
@@ -102,6 +103,7 @@ export const t = {
     rsvp: {
       heading: "Join us for the reveal?",
       subtitle: "Pink or Blue — come find out with us!",
+      deadline: "RSVP Deadline: June 20, 2026",
       namePlaceholder: "Enter your name",
       guestCount: "Number of Guests",
       accept: "Joyfully Accept",
@@ -202,6 +204,7 @@ export const t = {
       heading: "チームガール？チームボーイ？",
       subtitle: "予想をタップして、みんなの意見を見てみよう！",
       luckyDraw: "正解者は21:00のラッキードローに参加できます！",
+      votingDeadline: "投票締め切り：2026年6月20日",
       step1: "お名前",
       step2: "チームを選ぼう",
       namePlaceholder: "✏️ お名前を入力してください",
@@ -224,6 +227,7 @@ export const t = {
     rsvp: {
       heading: "発表パーティーに参加しませんか？",
       subtitle: "ピンクかブルー、一緒に確かめましょう！",
+      deadline: "RSVP締め切り：2026年6月20日",
       namePlaceholder: "お名前を入力してください",
       guestCount: "参加人数",
       accept: "喜んで出席します",
